@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gratian Group — AI-Powered People Ops Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+
+  /* ── TOKENS ─────────────────────────────────────── */
+  :root {
+    --bg:          #0B0A08;
+    --bg-cool:     #0C0E13;
+    --bg-warm:     #0F0C08;
+    --bg-mid:      #161411;
+    --cream:       #F6F1E7;
+    --cream-dim:   #E8E1D5;
+    --ivory:       #F2EDE3;
+    --ivory-dim:   #A9A39A;
+    --dark-text:   #1C1914;
+    --dark-dim:    #6B6560;
+    --gold:        #B8924A;
+    --gold-lt:     #D4AA6A;
+    --gold-dk:     #8C6D34;
+    --border-dk:   rgba(242,237,227,0.08);
+    --border-lt:   rgba(28,25,20,0.12);
+    --border-gold: rgba(184,146,74,0.3);
+    --serif:   'Cormorant Garamond', Georgia, serif;
+    --mono:    'DM Mono', monospace;
+    --sans:    'DM Sans', system-ui, sans-serif;
+  }
+
+  /* ── RESET ──────────────────────────────────────── */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ivory);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  a { color:inherit; text-decoration:none; }
+
+  /* ── GRAIN ──────────────────────────────────────── */
+  body::after {
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none; z-index:9000;
+    opacity:0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:256px 256px;
+  }
+
+  /* ── CURSOR ─────────────────────────────────────── */
+  .cur-dot {
+    position:fixed; top:0; left:0; z-index:9999;
+    width:7px; height:7px;
+    background:var(--gold); border-radius:50%;
+    transform:translate(-50%,-50%); pointer-events:none;
+  }
+  .cur-ring {
+    position:fixed; top:0; left:0; z-index:9998;
+    width:30px; height:30px;
+    border:1px solid rgba(184,146,74,.4); border-radius:50%;
+    transform:translate(-50%,-50%); pointer-events:none;
+  }
+
+  /* ── NAV ────────────────────────────────────────── */
+  .nav {
+    position:fixed; top:0; left:0; right:0; z-index:500;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 60px;
+    border-bottom:1px solid transparent;
+    transition: background .4s, border-color .4s, backdrop-filter .4s;
+  }
+  .nav.stuck {
+    background:rgba(11,10,8,.9);
+    backdrop-filter:blur(18px);
+    border-color:var(--border-dk);
+  }
+  .nav-logo {
+    font-family:var(--serif); font-size:17px; font-weight:500;
+    letter-spacing:.18em; text-transform:uppercase;
+  }
+  .nav-logo em { font-style:normal; color:var(--gold); }
+  .nav-links { display:flex; gap:44px; list-style:none; }
+  .nav-links a {
+    font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.13em; text-transform:uppercase;
+    color:var(--ivory-dim); transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-btn {
+    font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.13em; text-transform:uppercase;
+    color:var(--bg); background:var(--gold);
+    padding:11px 24px;
+    transition:background .2s, transform .2s;
+  }
+  .nav-btn:hover { background:var(--gold-lt); transform:translateY(-1px); }
+
+  /* ── SHARED UTILITIES ───────────────────────────── */
+  .sec { padding:140px 60px; }
+  .sec-label {
+    font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold);
+    display:flex; align-items:center; gap:14px;
+    margin-bottom:52px;
+  }
+  .sec-label::before { content:''; width:36px; height:1px; background:var(--gold); }
+  .sec-label.center { justify-content:center; }
+  .sec-label.center::before { display:none; }
+  .sec-label.center::after { content:''; width:36px; height:1px; background:var(--gold); }
+  .sec-label.dark { color:var(--gold-dk); }
+  .sec-label.dark::before, .sec-label.dark::after { background:var(--gold-dk); }
+
+  .r { opacity:0; transform:translateY(32px); transition:opacity .85s ease, transform .85s ease; }
+  .r.in { opacity:1; transform:none; }
+  .r.d1 { transition-delay:.12s; }
+  .r.d2 { transition-delay:.22s; }
+  .r.d3 { transition-delay:.32s; }
+
+  /* ═══════════════════════════════════════════════════
+     SB1 — HERO  (photo, aspirational)
+  ═══════════════════════════════════════════════════ */
+  #sb1 {
+    min-height:100vh;
+    background-image:
+      linear-gradient(to right, rgba(11,10,8,.88) 0%, rgba(11,10,8,.55) 45%, rgba(11,10,8,.1) 100%),
+      linear-gradient(to bottom, rgba(11,10,8,.2) 0%, rgba(11,10,8,.5) 55%, rgba(11,10,8,.98) 100%),
+      url('https://darnell-scott.com/wp-content/uploads/2026/03/generated-image-1.png');
+    background-size:cover;
+    background-position:center top;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:0 60px 72px;
+    position:relative; overflow:hidden;
+  }
+  .hero-rule {
+    position:absolute; top:0; left:0;
+    height:2px; width:0;
+    background:linear-gradient(90deg, var(--gold), transparent);
+    animation:drawLine 1.8s cubic-bezier(.16,1,.3,1) .3s forwards;
+  }
+  @keyframes drawLine { to { width:55%; } }
+
+  .hero-eyebrow {
+    font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+    display:flex; align-items:center; gap:14px;
+    margin-bottom:32px;
+    opacity:0; transform:translateY(14px);
+    animation:up .7s ease .4s forwards;
+  }
+  .hero-eyebrow::before { content:''; width:36px; height:1px; background:var(--gold); }
+  .hero-h1 {
+    font-family:var(--serif);
+    font-size:clamp(60px,9vw,140px);
+    font-weight:500; line-height:.93; letter-spacing:-.015em;
+    margin-bottom:56px;
+  }
+  .hero-h1 em { font-style:italic; color:var(--gold); }
+  .h1-line { display:block; overflow:hidden; }
+  .h1-inner { display:block; transform:translateY(105%); animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards; }
+  .h1-line:nth-child(1) .h1-inner { animation-delay:.42s; }
+  .h1-line:nth-child(2) .h1-inner { animation-delay:.56s; }
+  .h1-line:nth-child(3) .h1-inner { animation-delay:.70s; }
+
+  .hero-foot {
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-top:1px solid var(--border-dk); padding-top:36px;
+    opacity:0; animation:up .8s ease 1s forwards;
+  }
+  .hero-left { max-width:480px; }
+  .hero-tagline { font-size:16px; color:var(--ivory-dim); line-height:1.75; margin-bottom:28px; }
+  .hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-gold {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--bg); background:var(--gold); padding:14px 32px;
+    transition:background .2s, transform .2s;
+  }
+  .btn-gold:hover { background:var(--gold-lt); transform:translateY(-1px); }
+  .btn-ghost {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--ivory-dim); border:1px solid var(--border-dk); padding:14px 32px;
+    transition:border-color .2s, color .2s;
+  }
+  .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+  .btn-gold-dk {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--cream); background:var(--dark-text); padding:16px 40px;
+    transition:background .2s, transform .2s;
+  }
+  .btn-gold-dk:hover { background:#2e2a24; transform:translateY(-1px); }
+  .btn-outline-dk {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--dark-dim); border:1px solid var(--border-lt); padding:16px 40px;
+    transition:border-color .2s, color .2s;
+  }
+  .btn-outline-dk:hover { border-color:var(--gold-dk); color:var(--gold-dk); }
+
+  .hero-kpi { text-align:right; }
+  .kpi-num {
+    font-family:var(--serif);
+    font-size:clamp(56px,5.5vw,88px); font-weight:300; color:var(--gold); line-height:1;
+    display:flex; align-items:baseline; justify-content:flex-end; gap:2px;
+  }
+  .kpi-num sup { font-size:.38em; }
+  .kpi-label {
+    font-family:var(--mono); font-size:10px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ivory-dim); margin-top:8px;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     CLIENT TICKER
+  ═══════════════════════════════════════════════════ */
+  .clients-bar {
+    background:var(--bg-mid);
+    border-top:1px solid var(--border-dk);
+    border-bottom:1px solid var(--border-dk);
+    padding:22px 0; overflow:hidden;
+  }
+  .clients-track {
+    display:flex; width:max-content;
+    animation:scrollLeft 28s linear infinite;
+  }
+  .clients-track:hover { animation-play-state:paused; }
+  .clients-seg {
+    display:flex; align-items:center; gap:48px; padding:0 48px;
+    white-space:nowrap;
+  }
+  .client-name {
+    font-family:var(--mono); font-size:11px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--ivory-dim);
+    transition:color .2s;
+  }
+  .clients-seg:hover .client-name { color:var(--ivory); }
+  .client-pip { width:3px; height:3px; background:var(--gold); border-radius:50%; opacity:.5; }
+
+  /* ═══════════════════════════════════════════════════
+     SB2-PHOTO — full-bleed photo moment (firefighting)
+  ═══════════════════════════════════════════════════ */
+  .sb2-photo {
+    display:grid; grid-template-columns:1fr 1fr;
+    min-height:80vh;
+  }
+  .sb2-photo__text {
+    background:var(--bg-cool);
+    display:flex; align-items:center;
+    padding:80px 60px;
+    position:relative;
+  }
+  /* subtle cool glow */
+  .sb2-photo__text::before {
+    content:''; position:absolute; top:-100px; left:-100px;
+    width:500px; height:500px;
+    background:radial-gradient(ellipse, rgba(60,80,120,.07) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .sb2-photo__img {
+    background-image: url('https://darnell-scott.com/wp-content/uploads/2026/03/SB2.png');
+    background-size:cover; background-position:center;
+  }
+  .sb2-photo__inner { position:relative; z-index:1; }
+  .sb2-stack {
+    font-family:var(--sans);
+    font-size:clamp(52px, 7vw, 120px);
+    font-weight:800; line-height:.88;
+    text-transform:uppercase;
+    letter-spacing:-.025em;
+  }
+  .sb2-stack .s1 { display:block; color:var(--ivory); }
+  .sb2-stack .s2 { display:block; color:rgba(242,237,227,.5); }
+  .sb2-stack .s3 { display:block; color:var(--gold); font-style:italic; font-family:var(--serif); font-weight:300; font-size:clamp(20px,1.8vw,30px); letter-spacing:.02em; margin-top:32px; }
+
+  /* ═══════════════════════════════════════════════════
+     SB2 — PROBLEM DETAIL (cool dark)
+  ═══════════════════════════════════════════════════ */
+  #sb2 {
+    background:var(--bg-cool);
+    padding:100px 60px 140px;
+    position:relative; overflow:hidden;
+  }
+  #sb2::before {
+    content:'';
+    position:absolute; top:-200px; right:-100px;
+    width:600px; height:600px;
+    background:radial-gradient(ellipse, rgba(60,80,120,.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .problem-sub {
+    font-size:16px; color:var(--ivory-dim); line-height:1.8;
+    max-width:640px; margin-bottom:80px;
+  }
+  .pain-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border:1px solid var(--border-dk);
+  }
+  .pain-card {
+    padding:48px 36px;
+    border-right:1px solid var(--border-dk);
+    transition:background .3s;
+  }
+  .pain-card:last-child { border-right:none; }
+  .pain-card:hover { background:rgba(255,255,255,.025); }
+  .pain-n {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+    color:var(--gold); margin-bottom:22px;
+  }
+  .pain-card h3 {
+    font-family:var(--serif); font-size:28px; font-weight:500;
+    line-height:1.2; margin-bottom:14px;
+  }
+  .pain-card p { font-size:14.5px; color:var(--ivory-dim); line-height:1.75; }
+
+  /* ═══════════════════════════════════════════════════
+     STATS BAR
+  ═══════════════════════════════════════════════════ */
+  .stats-bar {
+    background:var(--bg);
+    border-top:1px solid var(--border-dk);
+    border-bottom:1px solid var(--border-dk);
+  }
+  .stats-row {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border-left:1px solid var(--border-dk);
+  }
+  .stat {
+    padding:64px 40px; text-align:center;
+    border-right:1px solid var(--border-dk);
+  }
+  .stat-n {
+    font-family:var(--serif);
+    font-size:clamp(48px,5vw,72px); font-weight:300; line-height:1;
+    color:var(--ivory);
+  }
+  .stat-n em { font-style:normal; color:var(--gold); }
+  .stat-l {
+    font-family:var(--mono); font-size:10px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ivory-dim); margin-top:14px; display:block;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SB3 — GUIDE (warm dark + photo)
+  ═══════════════════════════════════════════════════ */
+  #sb3 {
+    background:var(--bg-warm);
+    padding:140px 60px;
+    position:relative; overflow:hidden;
+  }
+  #sb3::before {
+    content:'';
+    position:absolute; top:-100px; left:-100px;
+    width:600px; height:600px;
+    background:radial-gradient(ellipse, rgba(184,146,74,.05) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  /* Guide: text left, photo right */
+  .guide-layout {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:80px; align-items:center;
+    margin-bottom:100px;
+  }
+  .guide-empathy {
+    font-family:var(--serif);
+    font-size:clamp(32px,3.5vw,52px); font-weight:300; font-style:italic;
+    line-height:1.2; color:var(--ivory); margin-bottom:40px;
+  }
+  .guide-body {
+    font-size:15px; color:var(--ivory-dim); line-height:1.8; margin-bottom:40px;
+  }
+  .guide-name-block { border-left:2px solid var(--gold); padding-left:20px; }
+  .guide-name {
+    font-family:var(--serif); font-size:22px; font-weight:500; margin-bottom:4px;
+  }
+  .guide-title {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  /* Photo right column */
+  .guide-photo-col { position:relative; }
+  .guide-photo {
+    width:100%; height:540px; object-fit:cover; object-position:center;
+    display:block;
+  }
+  .guide-photo-badge {
+    position:absolute; bottom:0; left:0;
+    background:var(--bg-warm); border:1px solid var(--border-dk);
+    padding:20px 28px;
+  }
+  .guide-photo-badge ul {
+    list-style:none; display:flex; flex-direction:column; gap:10px;
+  }
+  .guide-photo-badge li {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ivory-dim);
+    display:flex; align-items:center; gap:10px;
+  }
+  .guide-photo-badge li::before {
+    content:''; width:18px; height:1px; background:var(--gold); flex-shrink:0;
+  }
+  .guide-photo-badge li em { font-style:normal; color:var(--gold); }
+
+  /* Authority strip below guide */
+  .authority-strip {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--border-dk);
+    border:1px solid var(--border-dk);
+    margin-bottom:40px;
+  }
+  .authority-item {
+    background:var(--bg-warm); padding:36px 32px;
+    display:flex; align-items:baseline; gap:16px;
+  }
+  .auth-icon {
+    font-family:var(--mono); font-size:12px;
+    color:var(--gold); flex-shrink:0; letter-spacing:.05em;
+  }
+  .auth-text {
+    font-family:var(--serif); font-size:20px; font-weight:400; line-height:1.3;
+  }
+  .auth-text em { font-style:normal; color:var(--gold); }
+  .logo-row {
+    display:flex; align-items:center; gap:0;
+    border:1px solid var(--border-dk);
+    margin-bottom:100px;
+  }
+  .logo-co {
+    flex:1; padding:20px 24px; text-align:center;
+    border-right:1px solid var(--border-dk);
+    font-family:var(--mono); font-size:10px; letter-spacing:.15em;
+    text-transform:uppercase; color:var(--ivory-dim);
+    transition:color .2s, background .2s;
+  }
+  .logo-co:last-child { border-right:none; }
+  .logo-co:hover { color:var(--gold); background:rgba(184,146,74,.04); }
+
+  /* Services */
+  .services-header {
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:40px;
+  }
+  .services-h2 {
+    font-family:var(--serif);
+    font-size:clamp(40px,4.5vw,64px); font-weight:300; line-height:1;
+  }
+  .services-h2 em { font-style:italic; color:var(--gold); }
+  .services-sub {
+    max-width:320px; font-size:14.5px; color:var(--ivory-dim);
+    line-height:1.75; text-align:right;
+  }
+  .services-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--border-dk);
+    border:1px solid var(--border-dk);
+  }
+  .service-card {
+    background:var(--bg-warm); padding:48px 36px;
+    cursor:pointer; transition:background .3s;
+  }
+  .service-card:hover { background:rgba(184,146,74,.04); }
+  .svc-n {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+    color:var(--gold); margin-bottom:24px;
+  }
+  .svc-title {
+    font-family:var(--serif); font-size:28px; font-weight:500;
+    line-height:1.2; margin-bottom:16px;
+  }
+  .svc-short { font-size:14.5px; color:var(--ivory-dim); line-height:1.7; margin-bottom:24px; }
+  .svc-toggle {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold);
+    display:flex; align-items:center; gap:8px;
+    border:none; background:none; cursor:pointer;
+    padding:0; transition:gap .2s;
+  }
+  .svc-toggle:hover { gap:14px; }
+  .svc-arrow { transition:transform .35s; display:inline-block; }
+  .service-card.open .svc-arrow { transform:rotate(90deg); }
+  .svc-expand {
+    max-height:0; overflow:hidden;
+    transition:max-height .5s ease, opacity .4s ease;
+    opacity:0; margin-top:0;
+  }
+  .service-card.open .svc-expand { max-height:500px; opacity:1; margin-top:24px; }
+  .svc-expand-intro {
+    font-size:14px; color:var(--ivory-dim); line-height:1.75;
+    margin-bottom:20px; padding-top:20px;
+    border-top:1px solid var(--border-dk);
+  }
+  .svc-bullets { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .svc-bullets li {
+    font-size:13.5px; color:var(--ivory-dim); line-height:1.6;
+    padding-left:16px; position:relative;
+  }
+  .svc-bullets li::before {
+    content:''; position:absolute; left:0; top:9px;
+    width:5px; height:1px; background:var(--gold);
+  }
+  .svc-bullets strong { color:var(--ivory); font-weight:400; }
+
+  /* ═══════════════════════════════════════════════════
+     SB4 — PLAN (photo + steps, cream)
+  ═══════════════════════════════════════════════════ */
+  #sb4 {
+    background:var(--cream);
+    padding:0;
+    overflow:hidden;
+  }
+  .plan-split {
+    display:grid; grid-template-columns:1fr 1fr;
+    min-height:600px;
+  }
+  .plan-photo-side {
+    background-image:
+      linear-gradient(to right, rgba(246,241,231,0) 70%, rgba(246,241,231,.3) 100%),
+      url('https://darnell-scott.com/wp-content/uploads/2026/03/SB4-scaled.jpg');
+    background-size:cover; background-position:center;
+    min-height:520px;
+  }
+  .plan-content-side {
+    padding:100px 72px 100px 64px;
+    background:var(--cream);
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .plan-content-side .sec-label { margin-bottom:32px; }
+  .plan-h2 {
+    font-family:var(--serif);
+    font-size:clamp(36px,3.8vw,58px); font-weight:300; line-height:1.05;
+    color:var(--dark-text); margin-bottom:56px;
+  }
+  .plan-h2 em { font-style:italic; color:var(--gold-dk); }
+  .plan-steps-list { display:flex; flex-direction:column; margin-bottom:52px; }
+  .plan-step {
+    padding:28px 0;
+    border-bottom:1px solid var(--border-lt);
+    display:flex; gap:24px; align-items:flex-start;
+  }
+  .plan-step:first-child { border-top:1px solid var(--border-lt); }
+  .plan-step-n {
+    font-family:var(--serif);
+    font-size:52px; font-weight:300; line-height:1;
+    color:rgba(184,146,74,.2); flex-shrink:0; width:52px; text-align:right;
+  }
+  .plan-step-text h3 {
+    font-family:var(--serif); font-size:22px; font-weight:500;
+    color:var(--dark-text); line-height:1.2; margin-bottom:8px;
+  }
+  .plan-step-text p { font-size:14px; color:var(--dark-dim); line-height:1.75; }
+  .plan-cta-row {
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SB5 — CTA (gold)
+  ═══════════════════════════════════════════════════ */
+  #sb5 {
+    background:var(--gold);
+    padding:100px 60px;
+    text-align:center; position:relative; overflow:hidden;
+  }
+  #sb5::before {
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(135deg, rgba(255,255,255,.05) 0%, transparent 60%);
+    pointer-events:none;
+  }
+  .cta5-eyebrow {
+    font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:rgba(11,10,8,.5);
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-bottom:32px;
+  }
+  .cta5-eyebrow::before, .cta5-eyebrow::after {
+    content:''; width:48px; height:1px; background:rgba(11,10,8,.3);
+  }
+  .cta5-h2 {
+    font-family:var(--serif);
+    font-size:clamp(48px,7vw,104px); font-weight:300; line-height:.95;
+    color:var(--bg); margin-bottom:40px;
+  }
+  .cta5-h2 em { font-style:italic; }
+  .cta5-sub {
+    font-size:16px; color:rgba(11,10,8,.65);
+    max-width:440px; margin:0 auto 52px; line-height:1.75;
+  }
+  .cta5-btns { display:flex; gap:16px; justify-content:center; }
+  .cta5-primary {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--gold); background:var(--bg);
+    padding:16px 40px; transition:background .2s, transform .2s;
+  }
+  .cta5-primary:hover { background:#1a1713; transform:translateY(-1px); }
+  .cta5-secondary {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:rgba(11,10,8,.75); border:1px solid rgba(11,10,8,.3);
+    padding:16px 40px; transition:border-color .2s, color .2s;
+  }
+  .cta5-secondary:hover { border-color:var(--bg); color:var(--bg); }
+
+  /* ═══════════════════════════════════════════════════
+     SB6 — STAKES (darkest cool)
+  ═══════════════════════════════════════════════════ */
+  #sb6 {
+    background:#070A0D;
+    padding:140px 60px;
+    position:relative; overflow:hidden;
+  }
+  #sb6::before {
+    content:'';
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:800px; height:400px;
+    background:radial-gradient(ellipse, rgba(20,30,50,.6) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  #sb6 .sec-label { color:#6B7A8D; }
+  #sb6 .sec-label::before { background:#3D4D5E; }
+  .failure-layout {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:100px; align-items:center;
+  }
+  .failure-h2 {
+    font-family:var(--serif);
+    font-size:clamp(40px,5vw,72px); font-weight:300; line-height:1.05;
+    color:rgba(242,237,227,.7); margin-bottom:28px;
+  }
+  .failure-body {
+    font-size:15px; color:rgba(169,163,154,.6); line-height:1.8; margin-bottom:40px;
+  }
+  .failure-link {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:rgba(184,146,74,.6);
+    display:inline-flex; align-items:center; gap:10px;
+    border-bottom:1px solid rgba(184,146,74,.2); padding-bottom:8px;
+    transition:gap .2s, color .2s, border-color .2s;
+  }
+  .failure-link:hover { gap:18px; color:var(--gold); border-color:var(--border-gold); }
+  .failure-stakes { display:flex; flex-direction:column; gap:1px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.04); }
+  .stake {
+    padding:32px 36px;
+    background:#070A0D;
+    transition:background .3s;
+  }
+  .stake:hover { background:rgba(255,255,255,.02); }
+  .stake-title {
+    font-family:var(--serif); font-size:20px; font-weight:500;
+    color:rgba(242,237,227,.55); margin-bottom:10px;
+  }
+  .stake-body { font-size:13.5px; color:rgba(169,163,154,.45); line-height:1.65; }
+
+  /* ═══════════════════════════════════════════════════
+     SB7 — SUCCESS (luminous cream)
+  ═══════════════════════════════════════════════════ */
+  #sb7 {
+    background:var(--cream);
+    padding:140px 60px;
+    position:relative; overflow:hidden;
+  }
+  #sb7::before {
+    content:'';
+    position:absolute; top:-150px; right:-150px;
+    width:700px; height:700px;
+    background:radial-gradient(ellipse, rgba(184,146,74,.07) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .success-eyebrow {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--gold-dk);
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-bottom:40px;
+  }
+  .success-eyebrow::before, .success-eyebrow::after {
+    content:''; width:48px; height:1px; background:var(--gold-dk); opacity:.5;
+  }
+  .success-h2 {
+    font-family:var(--serif);
+    font-size:clamp(52px,7vw,104px); font-weight:300; line-height:.95;
+    text-align:center; color:var(--dark-text); margin-bottom:80px;
+  }
+  .success-h2 em { font-style:italic; color:var(--gold-dk); }
+  .quotes-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1px; background:rgba(28,25,20,.1);
+    border:1px solid rgba(28,25,20,.1);
+    margin-bottom:72px;
+  }
+  .q-card {
+    background:var(--cream); padding:52px 44px;
+    transition:background .3s;
+  }
+  .q-card:hover { background:var(--cream-dim); }
+  .q-mark {
+    font-family:var(--serif); font-size:72px; line-height:.5;
+    color:var(--gold-dk); opacity:.25; margin-bottom:16px;
+  }
+  .q-body {
+    font-family:var(--serif); font-size:21px; font-weight:300;
+    font-style:italic; line-height:1.5; color:var(--dark-text); margin-bottom:28px;
+  }
+  .q-body em { font-style:normal; color:var(--gold-dk); }
+  .q-attr {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--dark-dim);
+  }
+  .q-attr span { color:var(--gold-dk); }
+  .success-cta { text-align:center; }
+  .success-cta p {
+    font-size:15px; color:var(--dark-dim); max-width:420px;
+    margin:0 auto 36px; line-height:1.75;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  footer {
+    background:var(--bg); padding:48px 60px;
+    border-top:1px solid var(--border-dk);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .foot-logo {
+    font-family:var(--serif); font-size:16px; font-weight:500;
+    letter-spacing:.18em; text-transform:uppercase;
+  }
+  .foot-logo em { font-style:normal; color:var(--gold); }
+  .foot-copy {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; color:var(--ivory-dim);
+  }
+  .foot-links { display:flex; gap:32px; list-style:none; }
+  .foot-links a {
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ivory-dim); transition:color .2s;
+  }
+  .foot-links a:hover { color:var(--gold); }
+
+  /* ── KEYFRAMES ──────────────────────────────────── */
+  @keyframes up { to { opacity:1; transform:none; } }
+  @keyframes slideUp { to { transform:translateY(0); } }
+  @keyframes scrollLeft {
+    from { transform:translateX(0); }
+    to   { transform:translateX(-50%); }
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width:960px) {
+    .nav { padding:20px 24px; }
+    .nav-links { display:none; }
+    #sb1 { padding:0 24px 56px; }
+    .sec, #sb2, #sb3, #sb5, #sb6, #sb7 { padding:100px 24px; }
+    .hero-foot { flex-direction:column; gap:36px; align-items:flex-start; }
+    .hero-kpi { text-align:left; }
+    .pain-grid, .services-grid, .quotes-grid { grid-template-columns:1fr; }
+    .pain-card, .services-grid > .service-card { border-right:none; border-bottom:1px solid var(--border-dk); }
+    .stats-row { grid-template-columns:1fr 1fr; }
+    .guide-layout { grid-template-columns:1fr; gap:60px; }
+    .guide-photo { height:320px; }
+    .authority-strip { grid-template-columns:1fr; }
+    .logo-row { flex-wrap:wrap; }
+    .services-header { flex-direction:column; gap:20px; align-items:flex-start; }
+    .services-sub { text-align:left; }
+    .sb2-photo { grid-template-columns:1fr; }
+    .sb2-photo__img { min-height:240px; order:-1; }
+    .sb2-photo__text { padding:56px 24px; }
+    .plan-split { grid-template-columns:1fr; }
+    .plan-photo-side { min-height:280px; }
+    .plan-content-side { padding:72px 24px; }
+    .failure-layout { grid-template-columns:1fr; gap:60px; }
+    footer { flex-direction:column; gap:24px; text-align:center; }
+    .foot-links { justify-content:center; }
+    .cta5-btns { flex-direction:column; align-items:center; }
+    .sb2-photo__inner { padding:56px 24px; }
+  }
+
+  </style>
+</head>
+<body>
+
+<div class="cur-dot" id="dot"></div>
+<div class="cur-ring" id="ring"></div>
+
+<!-- ═══ NAV ════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <a href="#sb1" class="nav-logo">Gratian <em>Group</em></a>
+  <ul class="nav-links">
+    <li><a href="#sb3">Services</a></li>
+    <li><a href="#sb4">How It Works</a></li>
+    <li><a href="#sb7">Results</a></li>
+    <li><a href="#sb5">Contact</a></li>
+  </ul>
+  <a href="#sb5" class="nav-btn">Book a Diagnostic</a>
+</nav>
+
+<!-- ═══ SB1: HERO ═══════════════════════════════════ -->
+<section id="sb1">
+  <div class="hero-rule"></div>
+
+  <div class="hero-eyebrow">AI-Powered People Ops · Growth-Stage Companies</div>
+
+  <h1 class="hero-h1">
+    <span class="h1-line"><span class="h1-inner">Become Your</span></span>
+    <span class="h1-line"><span class="h1-inner">Founder's Most</span></span>
+    <span class="h1-line"><span class="h1-inner"><em>Trusted Advisor.</em></span></span>
+  </h1>
+
+  <div class="hero-foot">
+    <div class="hero-left">
+      <p class="hero-tagline">AI-powered People Ops consulting for growth-stage companies — built by operators who've been in your seat.</p>
+      <div class="hero-btns">
+        <a href="#sb5" class="btn-gold">Book a Diagnostic</a>
+        <a href="#sb5" class="btn-ghost">Get the Free Checklist</a>
+      </div>
+    </div>
+    <div class="hero-kpi">
+      <div class="kpi-num"><span id="kpi">0</span><sup>+</sup></div>
+      <div class="kpi-label">Years Operator Experience</div>
+    </div>
+  </div>
+</section>
+
+<!-- Client ticker -->
+<div class="clients-bar" aria-label="Clients include">
+  <div class="clients-track">
+    <div class="clients-seg">
+      <span class="client-name">TikTok</span><span class="client-pip"></span>
+      <span class="client-name">NBCUniversal</span><span class="client-pip"></span>
+      <span class="client-name">American Express</span><span class="client-pip"></span>
+      <span class="client-name">Sweetgreen</span><span class="client-pip"></span>
+      <span class="client-name">Fortune 100</span><span class="client-pip"></span>
+      <span class="client-name">PE-Backed Growth</span><span class="client-pip"></span>
+      <span class="client-name">Series A–D</span><span class="client-pip"></span>
+    </div>
+    <div class="clients-seg" aria-hidden="true">
+      <span class="client-name">TikTok</span><span class="client-pip"></span>
+      <span class="client-name">NBCUniversal</span><span class="client-pip"></span>
+      <span class="client-name">American Express</span><span class="client-pip"></span>
+      <span class="client-name">Sweetgreen</span><span class="client-pip"></span>
+      <span class="client-name">Fortune 100</span><span class="client-pip"></span>
+      <span class="client-name">PE-Backed Growth</span><span class="client-pip"></span>
+      <span class="client-name">Series A–D</span><span class="client-pip"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SB2: PHOTO MOMENT ════════════════════════════ -->
+<div class="sb2-photo">
+  <div class="sb2-photo__text">
+    <div class="sb2-photo__inner">
+      <div class="sb2-stack r">
+        <span class="s1">Stop</span>
+        <span class="s2">Firefighting.</span>
+        <span class="s3">Start building what actually matters.</span>
+      </div>
+    </div>
+  </div>
+  <div class="sb2-photo__img"></div>
+</div>
+
+<!-- ═══ SB2: PROBLEM DETAIL ══════════════════════════ -->
+<section id="sb2">
+  <div class="sec-label r">The Problem</div>
+  <p class="problem-sub r">Scaling chaos eats your calendar. Broken hiring, missing systems, and constant crises keep you stuck in the tactical while your founder loses confidence. No CPO should have to choose between fixing today and building for tomorrow.</p>
+
+  <div class="pain-grid r">
+    <div class="pain-card">
+      <div class="pain-n">01</div>
+      <h3>Buried in the Tactical</h3>
+      <p>Never-ending emergencies crowd out the strategic work that earns you a seat at the table. You're capable of more — you just can't get to it.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-n">02</div>
+      <h3>Systems That Don't Scale</h3>
+      <p>Broken hiring pipelines, missing career frameworks, misaligned org structures. What worked at 50 people is a liability at 200.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-n">03</div>
+      <h3>Founder Confidence Eroding</h3>
+      <p>When People Ops can't keep pace, founders notice. The gap between their expectations and your bandwidth quietly becomes a trust problem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stats-row">
+    <div class="stat r">
+      <div class="stat-n"><em>$7.4M</em></div>
+      <span class="stat-l">Performance Improvement</span>
+    </div>
+    <div class="stat r d1">
+      <div class="stat-n"><em>340</em>% ROI</div>
+      <span class="stat-l">Documented Client Return</span>
+    </div>
+    <div class="stat r d2">
+      <div class="stat-n"><em>32→8</em>%</div>
+      <span class="stat-l">Turnover Reduction</span>
+    </div>
+    <div class="stat r d3">
+      <div class="stat-n"><em>25</em>+</div>
+      <span class="stat-l">Years Operator Experience</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SB3: THE GUIDE ════════════════════════════════ -->
+<section id="sb3">
+  <div class="sec-label r">The Guide</div>
+
+  <div class="guide-layout r">
+    <!-- Text left -->
+    <div>
+      <p class="guide-empathy">"We've built People Ops from scratch under your same pressure."</p>
+      <p class="guide-body">Tom Gratian spent 25 years inside the companies you're trying to become. He's navigated hypergrowth, built People functions from zero, and earned seats at the most demanding executive tables in business. He's not a consultant who studies organizations — he's an operator who built them.</p>
+      <div class="guide-name-block">
+        <div class="guide-name">Tom Gratian</div>
+        <div class="guide-title">Organization Effectiveness Practice Lead</div>
+      </div>
+    </div>
+    <!-- Photo right -->
+    <div class="guide-photo-col">
+      <img
+        class="guide-photo"
+        src="https://darnell-scott.com/wp-content/uploads/2026/03/generated-image-3.jpg"
+        alt="Tom Gratian in conversation with a client"
+        loading="lazy"
+      />
+      <div class="guide-photo-badge">
+        <ul>
+          <li><em>$7.4M</em> performance improvement, 340% ROI</li>
+          <li>Turnover cut from <em>32% → 8%</em></li>
+          <li>TikTok · NBCUniversal · Amex · Sweetgreen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authority strip -->
+  <div class="authority-strip r">
+    <div class="authority-item">
+      <span class="auth-icon">$7.4M</span>
+      <span class="auth-text">Performance improvement with <em>340% ROI</em> delivered for a single client</span>
+    </div>
+    <div class="authority-item">
+      <span class="auth-icon">24pp</span>
+      <span class="auth-text">Turnover cut from <em>32% to 8%</em> — in under 18 months</span>
+    </div>
+    <div class="authority-item">
+      <span class="auth-icon">25yr</span>
+      <span class="auth-text">Advising from <em>high-growth startups to Fortune 100s</em></span>
+    </div>
+  </div>
+
+  <div class="logo-row r">
+    <div class="logo-co">TikTok</div>
+    <div class="logo-co">NBCUniversal</div>
+    <div class="logo-co">Amex</div>
+    <div class="logo-co">Sweetgreen</div>
+  </div>
+
+  <!-- Services -->
+  <div class="services-header r">
+    <h2 class="services-h2">What We <em>Do.</em></h2>
+    <p class="services-sub">AI-powered tools and operator expertise — built for the speed your organization actually needs.</p>
+  </div>
+
+  <div class="services-grid r">
+    <div class="service-card" data-svc="1">
+      <div class="svc-n">01</div>
+      <div class="svc-title">Individual Effectiveness</div>
+      <p class="svc-short">AI-powered 360s, coaching, and career pathfinding that develop your leaders without six-figure programs.</p>
+      <button class="svc-toggle" aria-expanded="false">
+        Read More <span class="svc-arrow">→</span>
+      </button>
+      <div class="svc-expand">
+        <p class="svc-expand-intro">Your leaders need to grow, but you don't have the budget for enterprise coaching programs or the time to build a 360 from scratch.</p>
+        <ul class="svc-bullets">
+          <li><strong>AI 360 Assessment:</strong> Leadership reports tied to your competency model, not a generic framework.</li>
+          <li><strong>Coaching:</strong> Pair human coaching with AI-assisted follow-through.</li>
+          <li><strong>Career Conversations:</strong> AI-guided reflection to help individuals clarify skills and trajectory.</li>
+          <li><strong>Learning Studio:</strong> Pull from your existing LMS and generate full curricula.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-card" data-svc="2">
+      <div class="svc-n">02</div>
+      <div class="svc-title">Team Effectiveness</div>
+      <p class="svc-short">Diagnostic chatbots and ready-to-facilitate workshops that fix what's broken on your teams in days, not quarters.</p>
+      <button class="svc-toggle" aria-expanded="false">
+        Read More <span class="svc-arrow">→</span>
+      </button>
+      <div class="svc-expand">
+        <p class="svc-expand-intro">When teams are unproductive, the root cause is usually structural or cultural. Ours diagnoses first.</p>
+        <ul class="svc-bullets">
+          <li><strong>Team Effectiveness Diagnostic:</strong> A chatbot surveys your team in 48–72 hours.</li>
+          <li><strong>Workshops in a Box:</strong> Deliver the right facilitation kit based on the diagnosis.</li>
+          <li><strong>Team Health Dashboards:</strong> Track progress over time with clear, actionable metrics.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-card" data-svc="3">
+      <div class="svc-n">03</div>
+      <div class="svc-title">Organizational Effectiveness</div>
+      <p class="svc-short">Employee experience surveys, org diagnostics, and executive dashboards that show you exactly where to act.</p>
+      <button class="svc-toggle" aria-expanded="false">
+        Read More <span class="svc-arrow">→</span>
+      </button>
+      <div class="svc-expand">
+        <p class="svc-expand-intro">You can't fix what you can't see. Walk in with data instead of opinions.</p>
+        <ul class="svc-bullets">
+          <li><strong>Employee &amp; Customer Experience Surveys:</strong> Go beyond scores and surface root causes with AI.</li>
+          <li><strong>Org Effectiveness Diagnostics:</strong> Assess structural health across the entire company.</li>
+          <li><strong>Executive Dashboards &amp; Heat Maps:</strong> A single view of leadership strengths and gaps.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SB4: THE PLAN (photo split) ══════════════════ -->
+<section id="sb4">
+  <div class="plan-split">
+    <div class="plan-photo-side"></div>
+    <div class="plan-content-side">
+      <div class="sec-label dark r">How It Works</div>
+      <h2 class="plan-h2 r">Three steps to<br><em>founder-level trust.</em></h2>
+      <div class="plan-steps-list r">
+        <div class="plan-step">
+          <span class="plan-step-n">01</span>
+          <div class="plan-step-text">
+            <h3>Book a Diagnostic Call</h3>
+            <p>A focused 30-minute conversation — no pitch, no pressure. We listen, ask the right questions, and map your situation against 25 years of org builds.</p>
+          </div>
+        </div>
+        <div class="plan-step">
+          <span class="plan-step-n">02</span>
+          <div class="plan-step-text">
+            <h3>Get Your People Ops Playbook</h3>
+            <p>A prioritized action plan tailored to your stage, structure, and the outcomes your founder needs to see. Proven frameworks, not blank-notebook consulting.</p>
+          </div>
+        </div>
+        <div class="plan-step">
+          <span class="plan-step-n">03</span>
+          <div class="plan-step-text">
+            <h3>Earn Your Founder's Trust</h3>
+            <p>Execute with embedded support. Build the systems, develop the team, and show up at leadership reviews as an indispensable strategic partner.</p>
+          </div>
+        </div>
+      </div>
+      <div class="plan-cta-row r">
+        <a href="#sb5" class="btn-gold-dk">Book a Diagnostic</a>
+        <a href="#sb5" class="btn-outline-dk">Free Readiness Checklist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SB5: CTA (gold) ══════════════════════════════ -->
+<section id="sb5">
+  <div class="cta5-eyebrow">Ready When You Are</div>
+  <h2 class="cta5-h2 r">Book a<br><em>Diagnostic.</em></h2>
+  <p class="cta5-sub r">A free 30-minute call. No pitch, no pressure. Just a direct conversation about where you are and how fast we can get you where you need to be.</p>
+  <div class="cta5-btns r">
+    <a href="#" class="cta5-primary">Book a Diagnostic Call</a>
+    <a href="#" class="cta5-secondary">Get the Free Growth-Stage Readiness Checklist</a>
+  </div>
+</section>
+
+<!-- ═══ SB6: STAKES (darkest) ════════════════════════ -->
+<section id="sb6">
+  <div class="sec-label r">The Stakes</div>
+
+  <div class="failure-layout r">
+    <div>
+      <h2 class="failure-h2">Don't let scaling chaos bury your strategy.</h2>
+      <p class="failure-body">Every month spent triaging instead of building is a month your founder's confidence erodes, your best people start looking, and your window to lead strategically narrows. This isn't a slow drift — it's a compounding problem.</p>
+      <a href="#sb5" class="failure-link">Start the conversation before the window closes →</a>
+    </div>
+    <div class="failure-stakes">
+      <div class="stake">
+        <div class="stake-title">Attrition compounds quietly</div>
+        <p class="stake-body">High performers leave first. Without the right foundation, you'll spend more replacing talent than building culture — and the founder will notice before you do.</p>
+      </div>
+      <div class="stake">
+        <div class="stake-title">Broken systems don't self-repair</div>
+        <p class="stake-body">A misaligned org structure, an ad-hoc hiring process, no career frameworks — every month without a fix is another month of damage embedded in the organization's DNA.</p>
+      </div>
+      <div class="stake">
+        <div class="stake-title">Tactical credibility doesn't transfer</div>
+        <p class="stake-body">Being good at putting out fires doesn't earn you a seat at the strategy table. The window to become your founder's most trusted advisor doesn't stay open forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SB7: SUCCESS (cream) ═════════════════════════ -->
+<section id="sb7">
+  <div class="success-eyebrow r">What Success Looks Like</div>
+  <h2 class="success-h2 r">Become the leader your<br><em>founder counts on.</em></h2>
+
+  <div class="quotes-grid r">
+    <div class="q-card">
+      <div class="q-mark">"</div>
+      <p class="q-body">In six months, we went from <em>constantly firefighting</em> to running the most strategic People team in our company's history. Tom doesn't just consult — he gets in the trenches with you.</p>
+      <div class="q-attr">Chief People Officer <span>— Series C Technology Company</span></div>
+    </div>
+    <div class="q-card">
+      <div class="q-mark">"</div>
+      <p class="q-body">The roadmap we built together became the single most <em>important document I've presented to my CEO.</em> I stopped dreading those meetings — I started owning them.</p>
+      <div class="q-attr">VP People <span>— PE-Backed Fintech Scale-up</span></div>
+    </div>
+  </div>
+
+  <div class="success-cta r">
+    <p>Start with a free diagnostic conversation. No commitment required — just clarity about your next move.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="#sb5" class="btn-gold-dk">Book a Diagnostic</a>
+      <a href="#sb5" class="btn-outline-dk">Get the Free Checklist</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="foot-logo">Gratian <em>Group</em></div>
+  <div class="foot-copy">© 2025 Gratian Group. All rights reserved.</div>
+  <ul class="foot-links">
+    <li><a href="#sb3">Services</a></li>
+    <li><a href="#sb4">How It Works</a></li>
+    <li><a href="#sb7">Results</a></li>
+    <li><a href="#sb5">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  /* ── Cursor ── */
+  const dot = document.getElementById('dot');
+  const ring = document.getElementById('ring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function loop() {
+    dot.style.cssText  = `left:${mx}px;top:${my}px`;
+    rx += (mx-rx)*.13; ry += (my-ry)*.13;
+    ring.style.cssText = `left:${rx}px;top:${ry}px`;
+    requestAnimationFrame(loop);
+  })();
+
+  /* ── Nav stuck ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), {passive:true});
+
+  /* ── Counter ── */
+  const kpiEl = document.getElementById('kpi');
+  let done = false;
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !done) {
+      done = true;
+      const t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min((now-t0)/2000, 1);
+        kpiEl.textContent = Math.round((1-Math.pow(1-p,3))*25);
+        if (p<1) requestAnimationFrame(tick);
+      })(t0);
+    }
+  }).observe(kpiEl);
+  (() => {
+    const t0 = performance.now();
+    (function tick(now) {
+      const p = Math.min((now-t0)/2000, 1);
+      kpiEl.textContent = Math.round((1-Math.pow(1-p,3))*25);
+      if (p<1) requestAnimationFrame(tick);
+    })(t0);
+  })();
+
+  /* ── Scroll reveals ── */
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+  /* ── Service expand ── */
+  document.querySelectorAll('.service-card').forEach(card => {
+    const btn = card.querySelector('.svc-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.service-card').forEach(c => {
+        c.classList.remove('open');
+        const b = c.querySelector('.svc-toggle');
+        if (b) b.setAttribute('aria-expanded','false');
+      });
+      if (!isOpen) {
+        card.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+</script>
+</body>
+</html>
