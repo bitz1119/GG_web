@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Development Services | ThinkersPoint</title>
+  <meta name="description" content="High-converting websites built with latest technology and best practices." />
+  <link rel="canonical" href="https://thinkerspoint.com/services/web-development/" />
+
+  <meta property="og:title" content="Web Development Services | ThinkersPoint" />
+  <meta property="og:description" content="High-converting websites built with latest technology and best practices." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="../assets/style.css" />
+  <style>
+    
+/* ────────────────────────────────────────────────────────────────────── */
+/* VARIABLES & RESET */
+/* ────────────────────────────────────────────────────────────────────── */
+:root {
+  --bg:        #06060E;
+  --bg2:       #0B0B1C;
+  --bg3:       #101028;
+  --glass:     rgba(255,255,255,0.04);
+  --glass-h:   rgba(255,255,255,0.07);
+  --border:    rgba(255,255,255,0.07);
+  --border-a:  rgba(99,102,241,0.45);
+
+  --indigo:    #6366F1;
+  --violet:    #8B5CF6;
+  --pink:      #EC4899;
+  --amber:     #F59E0B;
+  --green:     #10B981;
+  --cyan:      #06B6D4;
+
+  --grad:       linear-gradient(135deg,#6366F1,#8B5CF6);
+  --grad-full:  linear-gradient(135deg,#6366F1 0%,#8B5CF6 50%,#EC4899 100%);
+  --grad-text:  linear-gradient(135deg,#818CF8,#A78BFA,#F472B6);
+
+  --text:   #F9FAFB;
+  --text2:  #D1D5DB;
+  --text3:  #9CA3AF;
+  --text4:  #6B7280;
+
+  --shadow:  0 20px 60px rgba(0,0,0,.7);
+  --glow:    0 0 40px rgba(99,102,241,.25);
+  --glow-h:  0 0 60px rgba(99,102,241,.45);
+
+  --r-s: 8px; --r-m: 14px; --r-l: 20px; --r-xl: 28px;
+  --max: 1180px;
+  --fh: 'Space Grotesk', sans-serif;
+  --fb: 'Inter', sans-serif;
+  --t: 0.32s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body { font-family:var(--fb); background:var(--bg); color:var(--text); line-height:1.65; overflow-x:hidden; }
+img  { max-width:100%; display:block; }
+a    { color:inherit; text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; }
+ul { list-style:none; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* UTILITIES */
+/* ────────────────────────────────────────────────────────────────────── */
+.container { max-width:var(--max); margin:0 auto; padding:0 28px; }
+.grad-text {
+  background:var(--grad-text);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.chip {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:5px 16px; border-radius:50px;
+  background:rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.28);
+  font-size:12px; font-weight:600; color:#A5B4FC; letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.chip .dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--indigo); animation:blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+.sec-head { text-align:center; margin-bottom:64px; }
+.sec-head .chip { margin-bottom:18px; }
+.sec-head h2 {
+  font-family:var(--fh); font-size:clamp(32px,5vw,52px); font-weight:800;
+  line-height:1.08; letter-spacing:-.5px; margin-bottom:18px;
+}
+.sec-head p { font-size:17px; color:var(--text3); max-width:560px; margin:0 auto; line-height:1.75; }
+
+.fi { opacity:0; transform:translateY(32px); transition:opacity .7s ease, transform .7s ease; }
+.fi.in { opacity:1; transform:none; }
+.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+.d4{transition-delay:.4s} .d5{transition-delay:.5s}
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* NAV – DESKTOP & MEGA DROPDOWN */
+/* ────────────────────────────────────────────────────────────────────── */
+#nav {
+  position:fixed; inset:0 0 auto 0; z-index:900;
+  padding:0 28px; transition:background var(--t), box-shadow var(--t);
+}
+#nav.scrolled {
+  background:rgba(6,6,14,.92); backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 1px 0 var(--border);
+}
+.nav-inner {
+  max-width:var(--max); margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  height:68px; gap:32px;
+}
+.nav-logo {
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--fh); font-size:20px; font-weight:700; white-space:nowrap;
+}
+.logo-box {
+  width:36px; height:36px; border-radius:10px;
+  background:var(--grad); display:flex; align-items:center; justify-content:center;
+  font-size:17px; flex-shrink:0;
+}
+.nav-links { display:flex; align-items:center; gap:4px; }
+.nav-links a {
+  padding:7px 15px; font-size:14px; font-weight:500;
+  color:var(--text3); border-radius:var(--r-s);
+  transition:color var(--t), background var(--t);
+}
+.nav-links a:hover { color:var(--text); background:var(--glass); }
+
+/* Mega Dropdown */
+.nav-item { position:relative; }
+.nav-item > a {
+  display:flex; align-items:center; gap:5px; padding:7px 15px;
+  font-size:14px; font-weight:500; color:var(--text3);
+  border-radius:var(--r-s); transition:all var(--t);
+}
+.nav-item > a::after { content:''; width:6px; height:6px; border-radius:2px; background:currentColor; opacity:.5; }
+.nav-item > a:hover { color:var(--text); background:var(--glass); }
+.dropdown {
+  display:none; position:absolute; top:100%; left:0; z-index:910;
+  background:rgba(11,11,28,.95); backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border); border-radius:var(--r-l);
+  min-width:240px; margin-top:8px; padding:12px 0;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+}
+.nav-item:hover .dropdown { display:block; }
+.dropdown a {
+  display:block; padding:10px 20px; font-size:13px; color:var(--text3);
+  transition:all var(--t);
+}
+.dropdown a:hover { color:#fff; background:rgba(99,102,241,.15); padding-left:24px; }
+.dropdown .divider { height:1px; background:var(--border); margin:8px 0; }
+
+.nav-cta {
+  padding:9px 22px; background:var(--grad); border-radius:var(--r-s);
+  font-size:14px; font-weight:600; color:#fff; white-space:nowrap;
+  transition:opacity var(--t), transform var(--t), box-shadow var(--t);
+}
+.nav-cta:hover { opacity:.88; transform:translateY(-1px); box-shadow:var(--glow); }
+.nav-burger { display:none; color:var(--text); font-size:20px; padding:8px; }
+
+/* Mobile Nav */
+#mob-nav {
+  display:none; position:fixed; inset:0; z-index:950;
+  background:rgba(6,6,14,.97); backdrop-filter:blur(20px);
+  flex-direction:column; align-items:center; justify-content:center; gap:6px;
+}
+#mob-nav.open { display:flex; }
+#mob-nav a {
+  font-family:var(--fh); font-size:30px; font-weight:700;
+  color:var(--text2); padding:12px 48px; border-radius:var(--r-m);
+  transition:color var(--t), background var(--t);
+}
+#mob-nav a:hover { color:#fff; background:var(--glass-h); }
+.mob-close {
+  position:absolute; top:24px; right:28px;
+  font-size:22px; color:var(--text3); padding:8px; cursor:pointer;
+}
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* PAGE HERO (for inner pages) */
+/* ────────────────────────────────────────────────────────────────────── */
+.page-hero {
+  min-height:420px; display:flex; align-items:center; justify-content:center;
+  padding:130px 28px 80px; position:relative; overflow:hidden;
+}
+.page-hero::before {
+  content:''; position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:52px 52px;
+}
+.page-hero::after {
+  content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(139,92,246,.1) 100%);
+}
+.page-hero-inner {
+  position:relative; z-index:2; text-align:center; max-width:700px;
+}
+.page-hero h1 {
+  font-family:var(--fh); font-size:clamp(36px,6vw,56px);
+  font-weight:800; line-height:1.08; letter-spacing:-.5px; margin-bottom:18px;
+}
+.page-hero p {
+  font-size:17px; color:var(--text3); line-height:1.75;
+}
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* BUTTONS */
+/* ────────────────────────────────────────────────────────────────────── */
+.btn-prim {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:13px 28px; background:var(--grad); border-radius:var(--r-m);
+  font-size:15px; font-weight:600; color:#fff;
+  box-shadow:0 4px 24px rgba(99,102,241,.42);
+  transition:all var(--t);
+}
+.btn-prim:hover { transform:translateY(-2px); box-shadow:0 8px 36px rgba(99,102,241,.6); }
+.btn-sec {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:13px 28px; background:var(--glass); border:1px solid var(--border);
+  border-radius:var(--r-m); font-size:15px; font-weight:600; color:var(--text2);
+  transition:all var(--t);
+}
+.btn-sec:hover { background:var(--glass-h); border-color:var(--border-a); color:#fff; transform:translateY(-2px); }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* FEATURE GRID */
+/* ────────────────────────────────────────────────────────────────────── */
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:80px; }
+.feat-card {
+  background:var(--glass); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:32px 28px;
+  position:relative; overflow:hidden; cursor:default;
+  transition:all var(--t);
+}
+.feat-card::after {
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  background:var(--grad-full); opacity:0; transition:opacity var(--t);
+}
+.feat-card:hover {
+  border-color:var(--border-a); transform:translateY(-8px); box-shadow:var(--glow);
+}
+.feat-card:hover::after { opacity:.05; }
+.feat-icon {
+  width:48px; height:48px; border-radius:var(--r-m);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; margin-bottom:20px;
+  position:relative; z-index:1;
+  transition:transform var(--t);
+}
+.feat-card:hover .feat-icon { transform:scale(1.1) rotate(-6deg); }
+.feat-card h3 {
+  font-family:var(--fh); font-size:18px; font-weight:700;
+  margin-bottom:10px; position:relative; z-index:1;
+}
+.feat-card p {
+  font-size:14px; color:var(--text3); line-height:1.72; position:relative; z-index:1;
+}
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* PROCESS STEPS */
+/* ────────────────────────────────────────────────────────────────────── */
+.process {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:80px;
+}
+.pstep {
+  background:var(--glass); border:1px solid var(--border);
+  border-radius:var(--r-l); padding:28px 24px; position:relative;
+  text-align:center; transition:all var(--t);
+}
+.pstep::before {
+  content:attr(data-step);
+  position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+  width:32px; height:32px; border-radius:50%;
+  background:var(--grad); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700;
+}
+.pstep:hover {
+  border-color:var(--border-a); transform:translateY(-6px); box-shadow:var(--glow);
+}
+.pstep h4 {
+  font-family:var(--fh); font-size:16px; font-weight:700; margin-bottom:8px;
+  margin-top:16px;
+}
+.pstep p { font-size:13px; color:var(--text3); line-height:1.6; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* STATS ROW */
+/* ────────────────────────────────────────────────────────────────────── */
+.stats-row {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:80px 0;
+}
+.stat-box {
+  background:var(--glass); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:32px 28px; text-align:center;
+  transition:all var(--t);
+}
+.stat-box:hover {
+  border-color:var(--border-a); transform:translateY(-6px); box-shadow:var(--glow);
+}
+.stat-num {
+  font-family:var(--fh); font-size:42px; font-weight:800;
+  background:var(--grad-text);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; margin-bottom:6px;
+}
+.stat-label { font-size:13px; color:var(--text3); font-weight:500; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* FAQ ACCORDION */
+/* ────────────────────────────────────────────────────────────────────── */
+.faq { margin:80px 0; }
+.faq-item {
+  background:var(--glass); border:1px solid var(--border);
+  border-radius:var(--r-l); margin-bottom:14px;
+  overflow:hidden; transition:all var(--t);
+}
+.faq-item:hover { border-color:var(--border-a); }
+.faq-q {
+  padding:18px 24px; cursor:pointer; display:flex;
+  align-items:center; justify-content:space-between; gap:16px;
+  font-weight:600; transition:all var(--t);
+}
+.faq-q:hover { background:var(--glass-h); }
+.faq-q i { transition:transform var(--t); }
+.faq-item.active .faq-q i { transform:rotate(180deg); }
+.faq-a {
+  max-height:0; overflow:hidden; transition:max-height var(--t);
+  padding:0 24px;
+}
+.faq-item.active .faq-a {
+  max-height:500px; padding:0 24px 18px 24px;
+}
+.faq-a p { color:var(--text3); line-height:1.75; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* CTA SECTION */
+/* ────────────────────────────────────────────────────────────────────── */
+#cta-section {
+  background:var(--bg2); padding:80px 28px; margin:80px 0 0 0;
+  text-align:center;
+}
+#cta-section .container { max-width:700px; }
+#cta-section h2 {
+  font-family:var(--fh); font-size:clamp(32px,5vw,48px);
+  font-weight:800; margin-bottom:18px; line-height:1.1;
+}
+#cta-section p {
+  font-size:17px; color:var(--text3); margin-bottom:32px; line-height:1.75;
+}
+#cta-section .btn-prim { margin-right:14px; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* FOOTER */
+/* ────────────────────────────────────────────────────────────────────── */
+footer {
+  background:var(--bg2); border-top:1px solid var(--border);
+  padding:60px 28px 28px; font-size:14px;
+}
+.ft-grid {
+  max-width:var(--max); margin:0 auto;
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px; margin-bottom:40px;
+}
+.ft-brand p { color:var(--text3); margin:16px 0 24px 0; line-height:1.75; }
+.ft-soc { display:flex; gap:12px; }
+.fs {
+  width:36px; height:36px; border-radius:8px;
+  background:var(--glass); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  transition:all var(--t);
+}
+.fs:hover {
+  background:var(--border-a); transform:translateY(-2px); box-shadow:var(--glow);
+}
+.ft-col h4 {
+  font-family:var(--fh); font-size:15px; font-weight:700; margin-bottom:18px;
+}
+.ft-col ul { display:flex; flex-direction:column; gap:9px; }
+.ft-col a {
+  color:var(--text3); transition:color var(--t);
+}
+.ft-col a:hover { color:#fff; }
+.ft-bottom {
+  max-width:var(--max); margin:0 auto;
+  border-top:1px solid var(--border); padding-top:24px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:16px;
+  color:var(--text4); font-size:13px;
+}
+.ft-bl { display:flex; gap:16px; }
+.ft-bl a {
+  color:var(--text3); transition:color var(--t);
+}
+.ft-bl a:hover { color:#fff; }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* SCROLL TO TOP */
+/* ────────────────────────────────────────────────────────────────────── */
+#st {
+  position:fixed; bottom:24px; right:24px; z-index:800;
+  width:44px; height:44px; border-radius:50%;
+  background:var(--grad); color:#fff; font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:all var(--t);
+  box-shadow:var(--glow);
+}
+#st.on { opacity:1; pointer-events:auto; }
+#st:hover { transform:translateY(-3px); }
+
+/* ────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE */
+/* ────────────────────────────────────────────────────────────────────── */
+@media (max-width:1024px) {
+  .feat-grid { grid-template-columns:repeat(2,1fr); }
+  .process { grid-template-columns:repeat(2,1fr); }
+  .stats-row { grid-template-columns:repeat(2,1fr); }
+  .ft-grid { grid-template-columns:repeat(2,1fr); }
+  .nav-links { gap:0; }
+  .nav-links a { padding:6px 12px; font-size:13px; }
+}
+
+@media (max-width:768px) {
+  .nav-burger { display:block; }
+  .nav-links { display:none; }
+  .dropdown { display:none !important; }
+  .feat-grid { grid-template-columns:1fr; }
+  .process { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:1fr; }
+  .ft-grid { grid-template-columns:1fr; }
+  .page-hero h1 { font-size:32px; }
+  #cta-section .btn-prim { margin-right:0; margin-bottom:10px; }
+}
+
+  </style>
+</head>
+<body>
+  
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <div class="logo-box">💡</div>
+      ThinkersPoint
+    </a>
+    <div class="nav-links">
+      <div class="nav-item">
+        <a href="#">Services</a>
+        <div class="dropdown">
+          <a href="../services/digital-marketing.html">Digital Marketing</a>
+          <a href="../services/performance-marketing.html">Performance Marketing</a>
+          <a href="../services/social-media-marketing.html">Social Media Marketing</a>
+          <a href="../services/seo-services.html">SEO Services</a>
+          <a href="../services/web-development.html">Web Development</a>
+          <a href="../services/app-development.html">App Development</a>
+          <a href="../services/ui-ux-design.html">UI/UX Design</a>
+          <a href="../services/ai-solutions.html">AI Solutions</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#">Locations</a>
+        <div class="dropdown">
+          <a href="../locations/india.html">India</a>
+          <a href="../locations/usa.html">USA</a>
+          <a href="../locations/uk.html">UK & London</a>
+          <a href="../locations/uae-dubai.html">UAE & Dubai</a>
+          <a href="../locations/australia.html">Australia</a>
+          <a href="../locations/canada.html">Canada</a>
+          <a href="../locations/singapore.html">Singapore</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#">Industries</a>
+        <div class="dropdown">
+          <a href="../industries/real-estate.html">Real Estate</a>
+          <a href="../industries/insurance.html">Insurance</a>
+          <a href="../industries/healthcare.html">Healthcare</a>
+          <a href="../industries/ecommerce.html">E-commerce</a>
+          <a href="../industries/manufacturing.html">Manufacturing</a>
+          <a href="../industries/saas-tech.html">SaaS & Tech</a>
+        </div>
+      </div>
+      <a href="../about.html">About</a>
+      <a href="../blog/">Blog</a>
+    </div>
+    <a href="../contact.html" class="nav-cta">Get Started</a>
+    <button id="burger" class="nav-burger"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<div id="mob-nav">
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About</a>
+  <a href="../services/digital-marketing.html">Services</a>
+  <a href="../locations/india.html">Locations</a>
+  <a href="../industries/real-estate.html">Industries</a>
+  <a href="../blog/">Blog</a>
+  <a href="../contact.html">Contact</a>
+  <button id="mob-close" class="mob-close"><i class="fas fa-times"></i></button>
+</div>
+
+
+  <section class="page-hero">
+    <div class="page-hero-inner fi">
+      <h1>Web Development</h1>
+      <p>High-converting websites built with latest technology and best practices.</p>
+    </div>
+  </section>
+
+  
+<section style="padding:80px 28px; background:var(--bg);">
+  <div class="container fi d1">
+    <h2 style="font-family:var(--fh); font-size:clamp(28px,4vw,42px); font-weight:800; margin-bottom:32px;">
+      What is Web Development?
+    </h2>
+    <p style="font-size:16px; color:var(--text3); line-height:1.8; max-width:800px; margin-bottom:40px;">
+      High-converting websites built with latest technology and best practices. We combine strategic thinking with data-driven execution to deliver measurable results for your business.
+    </p>
+  </div>
+</section>
+
+<section style="padding:80px 28px; background:var(--bg2);">
+  <div class="container">
+    <div class="sec-head fi d1">
+      <div class="chip"><span class="dot"></span>Key Features</div>
+      <h2>What We Deliver</h2>
+      <p>Comprehensive solutions tailored to your business goals</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card fi d2">
+        <div class="feat-icon" style="background:rgba(99,102,241,.18); color:var(--indigo);">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Data-Driven Results</h3>
+        <p>Every strategy backed by analytics and real metrics. We measure what matters and optimize continuously.</p>
+      </div>
+      <div class="feat-card fi d3">
+        <div class="feat-icon" style="background:rgba(139,92,246,.18); color:var(--violet);">
+          <i class="fas fa-users-cog"></i>
+        </div>
+        <h3>Expert Team</h3>
+        <p>Industry veterans with 10+ years of combined experience. We've worked with brands like Amazon, Google, and Meta.</p>
+      </div>
+      <div class="feat-card fi d4">
+        <div class="feat-icon" style="background:rgba(236,72,153,.18); color:var(--pink);">
+          <i class="fas fa-rocket"></i>
+        </div>
+        <h3>Fast Implementation</h3>
+        <p>No lengthy setups. We launch campaigns and strategies within days, not months. Agile and flexible approach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 28px; background:var(--bg);">
+  <div class="container">
+    <div class="sec-head fi d1">
+      <div class="chip"><span class="dot"></span>Our Process</div>
+      <h2>How We Work</h2>
+      <p>A proven framework that delivers results every time</p>
+    </div>
+    <div class="process">
+      <div class="pstep fi d2" data-step="1">
+        <h4>Strategy</h4>
+        <p>We analyze your business, competitors, and market to create a winning strategy tailored to your goals.</p>
+      </div>
+      <div class="pstep fi d3" data-step="2">
+        <h4>Planning</h4>
+        <p>Detailed roadmap with timelines, milestones, and KPIs. Clear expectations from day one.</p>
+      </div>
+      <div class="pstep fi d4" data-step="3">
+        <h4>Execution</h4>
+        <p>Our expert team implements the strategy with precision and creativity. Daily monitoring and optimization.</p>
+      </div>
+      <div class="pstep fi d5" data-step="4">
+        <h4>Growth</h4>
+        <p>Continuous improvement based on data. Scale what works, pivot what doesn't. Long-term growth guaranteed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 28px; background:var(--bg2);">
+  <div class="container">
+    <div class="stats-row fi d1">
+      <div class="stat-box">
+        <div class="stat-num">300%</div>
+        <div class="stat-label">Avg. ROI Increase</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 28px; background:var(--bg);">
+  <div class="container" style="max-width:700px;">
+    <div class="sec-head fi d1">
+      <div class="chip"><span class="dot"></span>FAQ</div>
+      <h2>Common Questions</h2>
+      <p>Everything you need to know about our services</p>
+    </div>
+    <div class="faq fi d2">
+      <div class="faq-item active">
+        <div class="faq-q">
+          How long does it take to see results?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-a">
+          <p>Most clients see initial results within 30-45 days. Significant growth typically happens within 3-6 months depending on your industry and starting point.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          What's your pricing model?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-a">
+          <p>We offer flexible pricing based on scope, duration, and business goals. We have packages starting from ₹50,000/month. Get a custom quote during your consultation.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          Do you work with startups?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-a">
+          <p>Absolutely! We work with startups, SMEs, and enterprises. We have special startup packages and have helped 30+ startups scale from 0 to 7-8 figures in revenue.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          What if I'm not happy with the results?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-a">
+          <p>We have a 30-day money-back guarantee. If you're not satisfied with our work, we refund 100%. Your satisfaction is our priority.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta-section">
+  <div class="container fi d1">
+    <h2>Ready to Transform Your Web Development?</h2>
+    <p>Let's chat about your goals and create a winning strategy together. Schedule a free consultation today.</p>
+    <a href="contact.html" class="btn-prim">
+      <i class="fas fa-calendar-alt"></i> Book Free Consultation
+    </a>
+    <a href="contact.html" class="btn-sec">
+      <i class="fas fa-envelope"></i> Get a Proposal
+    </a>
+  </div>
+</section>
+
+
+  
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div class="nav-logo">
+        <div class="logo-box">💡</div>
+        ThinkersPoint
+      </div>
+      <p>Your strategic partner for digital marketing, business growth, and technology innovation. We think, strategize, and deliver.</p>
+      <div class="ft-soc">
+        <a href="https://www.linkedin.com/in/surajaggarwal38/" target="_blank" rel="noopener" class="fs">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="#" class="fs"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="fs"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="fs"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+
+    <div class="ft-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services/digital-marketing.html">Digital Marketing</a></li>
+        <li><a href="../services/performance-marketing.html">Performance Marketing</a></li>
+        <li><a href="../services/social-media-marketing.html">SMM</a></li>
+        <li><a href="../services/ai-solutions.html">AI Solutions</a></li>
+        <li><a href="../services/web-development.html">Web Development</a></li>
+        <li><a href="../services/ui-ux-design.html">UI/UX Design</a></li>
+      </ul>
+    </div>
+
+    <div class="ft-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../about.html">About Us</a></li>
+        <li><a href="../portfolio.html">Portfolio</a></li>
+        <li><a href="../blog/">Blog</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="ft-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://raccopilot.live" target="_blank" rel="noopener">RACcopilot ↗</a></li>
+        <li><a href="https://chattysurvey.online" target="_blank" rel="noopener">ChattySurvey ↗</a></li>
+        <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="../terms-of-service.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ft-bottom">
+    <p>© 2025 ThinkersPoint. All rights reserved. Crafted with ❤️ in India.</p>
+    <div class="ft-bl">
+      <a href="../privacy-policy.html">Privacy Policy</a>
+      <a href="../terms-of-service.html">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+
+  <script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  const st = document.getElementById('st');
+  if (st) st.classList.toggle('on', window.scrollY > 500);
+});
+
+// Mobile nav
+const burger = document.getElementById('burger');
+const mobNav = document.getElementById('mob-nav');
+const mobClose = document.getElementById('mob-close');
+
+if (burger) burger.addEventListener('click', () => mobNav.classList.add('open'));
+if (mobClose) mobClose.addEventListener('click', closeNav);
+
+function closeNav() {
+  mobNav.classList.remove('open');
+}
+
+// Close mobile nav when link clicked
+if (mobNav) {
+  mobNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeNav);
+  });
+}
+
+// Fade-in on scroll
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-q');
+  q.addEventListener('click', () => {
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+
+// Form submit simulation
+function submitForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('[type="submit"]');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+    btn.style.background = 'linear-gradient(135deg,#10B981,#059669)';
+    setTimeout(() => {
+      e.target.reset();
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 2000);
+  }, 1000);
+}
+</script>
+</body>
+</html>
